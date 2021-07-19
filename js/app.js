@@ -77,46 +77,47 @@ function agregarCarrito(evento) {
     contadorCarro();
     renderCarrito();
     sumaTotal();
+    guardarCarritoEnLocalStorage()
 };
 
 //Toma el length del array del carrito para sumar al contador del carrito.
-function contadorCarro () {
+function contadorCarro() {
     let contadorCarro = arrayCarrito.length;
     DOMcontador.textContent = contadorCarro;
 };
 
 function renderCarrito() {
 
-    DOMCarrito.textContent= "";
+    DOMCarrito.textContent = "";
     // Saco los duplicados del arrayCarrito
     const carritoSinDuplicados = [...new Set(arrayCarrito)]; //convierte el array carrito en un SET que hace que no se repitan las mismas entradas
-    
+
     carritoSinDuplicados.forEach((item) => {
         // Busco el item que necesita del array de base de datos
         const miItem = baseDeDatos.filter((itemBaseDatos) => {
             // ¿Coincide las id? Solo puede existir un caso, pasamos a Int el item por que el numero que consigue del atributo asignado al boton es de tipo string y sino no lo puede comparar
             return itemBaseDatos.id === parseInt(item);
         });
-         //Cuenta el número de veces que se repite el producto
-         const numeroUnidadesItem = arrayCarrito.reduce((total, itemId) => {
-             // ¿Coincide las id? Incremento el contador, en caso contrario no mantengo
-             return itemId === item ? total += 1 : total;
-         }, 0);
+        //Cuenta el número de veces que se repite el producto
+        const numeroUnidadesItem = arrayCarrito.reduce((total, itemId) => {
+            // ¿Coincide las id? Incremento el contador, en caso contrario no mantengo
+            return itemId === item ? total += 1 : total;
+        }, 0);
 
 
         //Nodo del item del carrito
 
         let itemCarro = document.createElement("li");
         itemCarro.classList.add("list-group-item");
-        itemCarro.textContent= `${numeroUnidadesItem} x ${miItem[0].nombre} - $${miItem[0].precio}`
+        itemCarro.textContent = `${numeroUnidadesItem} x ${miItem[0].nombre} - $${miItem[0].precio}`
 
         DOMCarrito.appendChild(itemCarro);
     });
 
-    
+
 };
 
-function sumaTotal () {
+function sumaTotal() {
     total = 0;
     //Obtento los elementos segun el id
     arrayCarrito.forEach(elemento => {
@@ -129,12 +130,14 @@ function sumaTotal () {
     DomTotalCarrito.textContent = total.toFixed(2) //para que siempre tenga .00 en el final del precio
 };
 
-DOMBotonVaciar.addEventListener("click", function vaciarCarrito () {
-     arrayCarrito = [];
-     renderCarrito();
+DOMBotonVaciar.addEventListener("click", function vaciarCarrito() {
+    arrayCarrito = [];
+    renderCarrito();
     sumaTotal();
-  
-}); 
+    contadorCarro();
+    localStorage.clear();
+
+});
 
 //Funcion de render, la imagen viene como un string con un URL local o internet. El atributo src se le agrega al html
 function renderHTML() {
@@ -185,7 +188,22 @@ function renderHTML() {
 };
 
 
+function guardarCarritoEnLocalStorage() {
+    localStorage.setItem("carrito", JSON.stringify(arrayCarrito));
+}
+
+function cargarCarritoDeLocalStorage() {
+    let carritoLocalStorage = localStorage.getItem("carrito");
+    // ¿Existe un carrito previo guardado en LocalStorage?
+    if (carritoLocalStorage !== null) {
+        // Carga la información
+        arrayCarrito = JSON.parse(carritoLocalStorage);
+    }
+}
 
 //Inicio del programa
+cargarCarritoDeLocalStorage();
 renderHTML();
-
+sumaTotal();
+contadorCarro();
+renderCarrito();
