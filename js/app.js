@@ -1,8 +1,8 @@
-const DOMcardRows = document.getElementById("cardRows");
-const DOMcontador = document.getElementById("contador");
-const DOMCarrito = document.getElementById("carrito");
-const DomTotalCarrito = document.getElementById("total");
-const DOMBotonVaciar = document.getElementById("botonVaciar");
+const DOMcardRows = $("#cardRows");
+const DOMcontador = $("#contador");
+const DOMCarrito = $("#carrito");
+const DomTotalCarrito = $("#total");
+const DOMBotonVaciar = $("#botonVaciar");
 const baseDeDatos = [
     {
         id: 1,
@@ -83,12 +83,12 @@ function agregarCarrito(evento) {
 //Toma el length del array del carrito para sumar al contador del carrito.
 function contadorCarro() {
     let contadorCarro = arrayCarrito.length;
-    DOMcontador.textContent = contadorCarro;
+    DOMcontador.text(contadorCarro) ;
 };
 
 function renderCarrito() {
 
-    DOMCarrito.textContent = "";
+    DOMCarrito.text("");
     // Saco los duplicados del arrayCarrito
     const carritoSinDuplicados = [...new Set(arrayCarrito)]; //convierte el array carrito en un SET que hace que no se repitan las mismas entradas
 
@@ -107,11 +107,13 @@ function renderCarrito() {
 
         //Nodo del item del carrito
 
-        let itemCarro = document.createElement("li");
-        itemCarro.classList.add("list-group-item");
-        itemCarro.textContent = `${numeroUnidadesItem} x ${miItem[0].nombre} - $${miItem[0].precio}`
+        // let itemCarro = document.createElement("li");
+        // itemCarro.classList.add("list-group-item");
+        // itemCarro.textContent = `${numeroUnidadesItem} x ${miItem[0].nombre} - $${miItem[0].precio}`
 
-        DOMCarrito.appendChild(itemCarro);
+        
+
+        DOMCarrito.append(`<li class="list-group-item">${numeroUnidadesItem} x ${miItem[0].nombre} - $${miItem[0].precio}</li>`);
     });
 
 
@@ -127,17 +129,9 @@ function sumaTotal() {
         });
         total = total + item[0].precio;
     });
-    DomTotalCarrito.textContent = total.toFixed(2) //para que siempre tenga .00 en el final del precio
+    DomTotalCarrito.text(total.toFixed(2)) //para que siempre tenga .00 en el final del precio
 };
 
-DOMBotonVaciar.addEventListener("click", function vaciarCarrito() {
-    arrayCarrito = [];
-    renderCarrito();
-    sumaTotal();
-    contadorCarro();
-    localStorage.clear();
-
-});
 
 //Funcion de render, la imagen viene como un string con un URL local o internet. El atributo src se le agrega al html
 function renderHTML() {
@@ -173,7 +167,7 @@ function renderHTML() {
         cardAction.setAttribute("marcador", element.id);
         cardAction.addEventListener("click", agregarCarrito);
 
-        DOMcardRows.appendChild(cardContainer);
+        DOMcardRows.append(cardContainer);
         cardContainer.appendChild(cardBody);
         cardBody.appendChild(imgCard);
         cardBody.appendChild(cardDetails);
@@ -183,9 +177,31 @@ function renderHTML() {
         cardDetails.appendChild(productPrice);
 
     });
-
-
 };
+
+function renderHTMLjQuery() {
+    baseDeDatos.forEach(e => {
+
+        DOMcardRows.append(`
+        <div class="col mb-5">
+        <div class="card h-100">
+            <img class="card-img-top" src="${e.imagen}" alt="..." />
+            <div class="card-body p-4 text-center">
+
+                <h5 class="fw-bolder">${e.nombre}</h5>
+                <div>${e.precio}</div>
+
+            </div>
+            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent text-center">
+                <button class="btn btn-outline-dark mt-auto agregarCarrito" marcador="${e.id}">Agregar al Carrito</button>
+                
+            </div>
+        </div>
+    </div>`)
+
+            ;
+    })
+}
 
 
 function guardarCarritoEnLocalStorage() {
@@ -203,7 +219,21 @@ function cargarCarritoDeLocalStorage() {
 
 //Inicio del programa
 cargarCarritoDeLocalStorage();
-renderHTML();
+//renderHTML();
+renderHTMLjQuery();
 sumaTotal();
 contadorCarro();
 renderCarrito();
+
+
+//Eventos
+DOMBotonVaciar.on("click",function vaciarCarrito() {
+    arrayCarrito = [];
+    renderCarrito();
+    sumaTotal();
+    contadorCarro();
+    localStorage.clear();
+
+});
+
+$(".agregarCarrito").on("click", agregarCarrito)

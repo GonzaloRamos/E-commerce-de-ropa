@@ -1,5 +1,5 @@
 header {
-  background-image: url(/assets/imagenes/img_header.jpg);
+  background-image: url(../assets/imagenes/img_header.jpg);
   min-height: 400px;
   background-attachment: fixed;
   background-position: center;
