@@ -83,7 +83,7 @@ function agregarCarrito(evento) {
 //Toma el length del array del carrito para sumar al contador del carrito.
 function contadorCarro() {
     let contadorCarro = arrayCarrito.length;
-    DOMcontador.text(contadorCarro) ;
+    DOMcontador.text(contadorCarro);
 };
 
 function renderCarrito() {
@@ -111,7 +111,7 @@ function renderCarrito() {
         // itemCarro.classList.add("list-group-item");
         // itemCarro.textContent = `${numeroUnidadesItem} x ${miItem[0].nombre} - $${miItem[0].precio}`
 
-        
+
 
         DOMCarrito.append(`<li class="list-group-item">${numeroUnidadesItem} x ${miItem[0].nombre} - $${miItem[0].precio}</li>`);
     });
@@ -131,7 +131,6 @@ function sumaTotal() {
     });
     DomTotalCarrito.text(total.toFixed(2)) //para que siempre tenga .00 en el final del precio
 };
-
 
 //Funcion de render, la imagen viene como un string con un URL local o internet. El atributo src se le agrega al html
 function renderHTML() {
@@ -180,16 +179,17 @@ function renderHTML() {
 };
 
 function renderHTMLjQuery() {
+    
     baseDeDatos.forEach(e => {
 
         DOMcardRows.append(`
-        <div class="col mb-5">
+        <div class="col mb-5 slidedown" style="display: none">
         <div class="card h-100">
             <img class="card-img-top" src="${e.imagen}" alt="..." />
             <div class="card-body p-4 text-center">
 
                 <h5 class="fw-bolder">${e.nombre}</h5>
-                <div>${e.precio}</div>
+                <div>$${e.precio}</div>
 
             </div>
             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent text-center">
@@ -197,9 +197,7 @@ function renderHTMLjQuery() {
                 
             </div>
         </div>
-    </div>`)
-
-            ;
+    </div>`);
     })
 }
 
@@ -217,6 +215,11 @@ function cargarCarritoDeLocalStorage() {
     }
 }
 
+
+
+
+
+
 //Inicio del programa
 cargarCarritoDeLocalStorage();
 //renderHTML();
@@ -225,9 +228,8 @@ sumaTotal();
 contadorCarro();
 renderCarrito();
 
-
 //Eventos
-DOMBotonVaciar.on("click",function vaciarCarrito() {
+DOMBotonVaciar.on("click", function vaciarCarrito() {
     arrayCarrito = [];
     renderCarrito();
     sumaTotal();
@@ -237,3 +239,15 @@ DOMBotonVaciar.on("click",function vaciarCarrito() {
 });
 
 $(".agregarCarrito").on("click", agregarCarrito)
+
+
+//Animaciones
+
+$("header").fadeIn(800, function () {
+    $("#tituloPag").fadeIn("slow", function () {
+        $("#subTituloPag").fadeIn("slow");
+
+    });
+})
+
+
