@@ -183,7 +183,7 @@ function renderHTMLjQuery() {
     baseDeDatos.forEach(e => {
 
         DOMcardRows.append(`
-        <div class="col mb-5 slidedown" style="display: none">
+        <div class="col mb-5 slidedown">
         <div class="card h-100">
             <img class="card-img-top" src="${e.imagen}" alt="..." />
             <div class="card-body p-4 text-center">
