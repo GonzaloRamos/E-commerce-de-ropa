@@ -1,3 +1,8 @@
+ /* * {
+  border: solid 1px red;
+
+} */
+
 header {
   display: none;
   background-image: url(../assets/imagenes/img_header.jpg);
@@ -15,4 +20,12 @@ header>div>div>p {
     text-shadow:1px 1px 2px black;
 }
 
+
+.modal-body {
+  padding-bottom: 0px;
+}
+
+.total {
+  padding: 40px 0px 0px 16px;
+}
 
