@@ -1,4 +1,4 @@
- /* * {
+/* * {
   border: solid 1px red;
 
 } */
@@ -13,13 +13,11 @@ header {
   background-size: cover;
 }
 
-
-header>div>div>h1,
-header>div>div>p {
+header > div > div > h1,
+header > div > div > p {
   display: none;
-    text-shadow:1px 1px 2px black;
+  text-shadow: 1px 1px 2px black;
 }
-
 
 .modal-body {
   padding-bottom: 0px;
@@ -29,3 +27,11 @@ header>div>div>p {
   padding: 40px 0px 0px 16px;
 }
 
+.img {
+  height: 300px;
+}
+
+input[type="radio"] {
+  position: absolute;
+  background-color: rgba(rgba(255, 0, 0, 0));
+}
