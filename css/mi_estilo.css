@@ -28,10 +28,23 @@ header > div > div > p {
 }
 
 .img {
-  height: 300px;
+  height: 33vh;
+  transition: transform 0.2s, border-radius 0.2s;
+}
+
+.img_search {
+  transition: transform 0.2s, border-radius 0.2s;
+}
+
+.img:hover,
+.img_search:hover {
+  transform: scale(1.05);
+  border-radius: 20px;
 }
 
 input[type="radio"] {
   position: absolute;
   background-color: rgba(rgba(255, 0, 0, 0));
+  margin: 10px 10px;
+  z-index: 999;
 }

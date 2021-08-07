@@ -22,7 +22,6 @@ const DOMBotonRemeras = $("#remeras");
 const DOMInputNombre = $("#inputNombre");
 const DOMInputPrecio = $("#inputPrecio");
 const DOMInputCategoria = $("#inputCategoria");
-
 //Arrays
 const baseDeDatos = [
   {
@@ -94,7 +93,12 @@ const baseDeDatos = [
   },
 ];
 
+let arrayProductosUsuario = [];
+
 let arrayCarrito = [];
+
+let arrayUrls = [];
+
 //Total Carrito
 let total = 0;
 
@@ -154,61 +158,13 @@ function sumaTotal() {
 }
 
 //Funcion de render, la imagen viene como un string con un URL local o internet. El atributo src se le agrega al html
-function renderHTML() {
-  baseDeDatos.forEach((element) => {
-    const cardContainer = document.createElement("div");
-    cardContainer.classList.add("col", "mb-5");
-
-    const cardBody = document.createElement("div");
-    cardBody.classList.add("card", "h-100");
-
-    const imgCard = document.createElement("img");
-    imgCard.classList.add("card-img-top");
-    imgCard.setAttribute("src", element.imagen);
-
-    const cardDetails = document.createElement("div");
-    cardDetails.classList.add("card-body", "p-4", "text-center");
-
-    const productName = document.createElement("h5");
-    productName.classList.add("fw-bolder");
-    productName.innerText = element.nombre;
-
-    const productPrice = document.createElement("div");
-    productPrice.innerText = `$${element.precio}`;
-
-    const cardActionContainer = document.createElement("div");
-    cardActionContainer.classList.add(
-      "card-footer",
-      "p-4",
-      "pt-0",
-      "border-top-0",
-      "bg-transparent",
-      "text-center"
-    );
-
-    const cardAction = document.createElement("button");
-    cardAction.classList.add("btn", "btn-outline-dark", "mt-auto");
-    cardAction.innerText = "Agregar al carrito";
-    cardAction.setAttribute("marcador", element.id);
-    cardAction.addEventListener("click", agregarCarrito);
-
-    DOMcardRows.append(cardContainer);
-    cardContainer.appendChild(cardBody);
-    cardBody.appendChild(imgCard);
-    cardBody.appendChild(cardDetails);
-    cardBody.appendChild(cardActionContainer);
-    cardActionContainer.appendChild(cardAction);
-    cardDetails.appendChild(productName);
-    cardDetails.appendChild(productPrice);
-  });
-}
 
 function renderHTMLjQuery() {
   baseDeDatos.forEach((e) => {
     DOMcardRows.append(`
         <div class="col mb-5 slidedown">
         <div class="card h-100">
-            <img class="card-img-top" src="${e.imagen}" alt="..." />
+            <img class="card-img-top img" src="${e.imagen}" alt="..." />
             <div class="card-body p-4 text-center">
 
                 <h5 class="fw-bolder">${e.nombre}</h5>
@@ -222,6 +178,33 @@ function renderHTMLjQuery() {
         </div>
     </div>`);
   });
+
+  //Ahora renderizo el producto del usuario
+
+  let productosUsuario = localStorage.getItem("productosUsuario");
+
+  if (productosUsuario !== null) {
+    arrayProductosUsuario = JSON.parse(productosUsuario);
+    baseDeDatos.push(...arrayProductosUsuario);
+    arrayProductosUsuario.forEach((e) => {
+      DOMcardRows.append(`
+          <div class="col mb-5 slidedown">
+          <div class="card h-100">
+              <img class="card-img-top img" src="${e.imagen}" alt="..." />
+              <div class="card-body p-4 text-center">
+  
+                  <h5 class="fw-bolder">${e.nombre}</h5>
+                  <div>$${e.precio}</div>
+  
+              </div>
+              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent text-center">
+                  <button class="btn btn-outline-dark mt-auto agregarCarrito" marcador="${e.id}">Agregar al Carrito</button>
+                  
+              </div>
+          </div>
+      </div>`);
+    });
+  }
 }
 
 function guardarCarritoEnLocalStorage() {
@@ -297,7 +280,7 @@ function filter(tipoDeProducto) {
       DOMcardRows.append(`  
       <div class="col mb-5 slidedown">
         <div class="card h-100">
-          <img class="card-img-top" src="${e.imagen}" alt="..." />
+          <img class="card-img-top img" src="${e.imagen}" alt="..." />
           <div class="card-body p-4 text-center">
     
               <h5 class="fw-bolder">${e.nombre}</h5>
@@ -339,9 +322,9 @@ function busquedaImagen(numeroPagina) {
             `
             <div class="col mb-3 id="cardBusqueda">
               <div class="card" style="width: 18rem;">
-                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault${i}" >
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault${i}" name="urlImagen" direccion="${element.urls.raw}" onclick="obtenerUrlImagen(this)" >
                   <label class="form-check-label" for="flexRadioDefault${i}" >
-                    <img src="${element.urls.raw}" class="card-img-top img" alt="${element.alt_description}">
+                    <img src="${element.urls.raw}" class="card-img-top img_search" alt="${element.alt_description}">
                   </label>
                 <div class="card-body">
                   <p class="card-text">Foto sacada por ${element.user.name} <br>Foto de libre uso.</p>
@@ -350,10 +333,13 @@ function busquedaImagen(numeroPagina) {
             </div>`
           );
         });
+        //Evento para que se inicialize despues del append, sino no lo reconoce. Obtiene la url segun donde se haga click
+        // $("input:radio").click({ param1: this }, obtenerUrlImagen);
       }
     }
   );
 }
+
 function paginaBusqueda(evento) {
   let pagina = evento.target.getAttribute("pagina");
   if (pagina !== null) {
@@ -361,20 +347,58 @@ function paginaBusqueda(evento) {
   }
 }
 
-function agregarProductoUsuario() {
+function obtenerUrlImagen(e) {
+  arrayUrls.push(e.getAttribute("direccion"));
+}
+
+function agregarProductoUsuario(listaUrls) {
   let nombre = $("#inputProducto").val();
 
-  let precio = $("#inputPrecio").val();
+  let precio = Number($("#inputPrecio").val());
 
   let id = baseDeDatos.length + 1;
 
-  let imagen = $("label img").attr("src");
-  console.log(imagen);
+  let categoria = DOMInputCategoria.val();
+
+  switch (categoria) {
+    case "socks":
+      categoria = "medias";
+      break;
+
+    case "hat":
+      categoria = "sombrero";
+      break;
+
+    case "clothes":
+      categoria = "combo";
+      break;
+
+    case "shirt":
+      categoria = "remera";
+      break;
+
+    default:
+      alert("Hubo un error al carga su producto. Por favor intentelo de nuevo");
+      break;
+  }
+
+  let imagen = listaUrls[arrayUrls.length - 1];
+
+  if (confirm("¿Revisaste bien?")) {
+    arrayProductosUsuario.push(
+      new Producto(id, nombre, precio, categoria, imagen)
+    );
+    localStorage.setItem(
+      "productosUsuario",
+      JSON.stringify(arrayProductosUsuario)
+    );
+
+    window.location.href = "./index.html";
+  }
 }
 
 //Inicio del programa
 cargarCarritoDeLocalStorage();
-//renderHTML();
 renderHTMLjQuery();
 sumaTotal();
 contadorCarro();
@@ -383,13 +407,18 @@ habilitar();
 
 //Eventos
 DOMBotonVaciar.on("click", vaciarCarrito);
+
 $(".agregarCarrito").on("click", agregarCarrito);
+
 DOMCuotas.change(cuotas);
+
 DOMComprar.on("click", comprar);
+
 $(".dropdown-item").click(function () {
   let atributoFiltro = $(this).attr("filtro");
   filter(atributoFiltro);
 });
+
 //Evento para cambiar el tipo de imagen en el creador de productos
 DOMInputCategoria.change(busquedaImagen);
 
@@ -397,6 +426,10 @@ DOMInputCategoria.change(busquedaImagen);
 $(".breadcrumb-item").on("click", function (evento) {
   let numeroPagina = paginaBusqueda(evento);
   busquedaImagen(numeroPagina);
+});
+
+$("#hola").click(function () {
+  console.log(agregarProductoUsuario(arrayUrls));
 });
 
 //Animaciones

@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "nombre": "Sombreros tipo vaquero",
+    "precio": 800,
+    "tipo": "sombrero",
+    "imagen": "assets/imagenes/Productos/sombreros.jpg"
+  },
+  {
+    "id": 2,
+    "nombre": "Remera Standard Blanca o Negra",
+    "precio": 1200,
+    "tipo": "remera",
+    "imagen": "https://images.pexels.com/photos/8532616/pexels-photo-8532616.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+  },
+  {
+    "id": 3,
+    "nombre": "Remera Nirvana",
+    "precio": 1499,
+    "tipo": "remera",
+    "imagen": "assets/imagenes/Productos/remera_nirvana.jpg"
+  },
+  {
+    "id": 4,
+    "nombre": "Medias de invierno",
+    "precio": 700,
+    "tipo": "medias",
+    "imagen": "https://images.pexels.com/photos/251454/pexels-photo-251454.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+  },
+  {
+    "id": 5,
+    "nombre": "Media para chicxs",
+    "precio": 500,
+    "tipo": "medias",
+    "imagen": "assets/imagenes/Productos/medias ralladas.jpg"
+  },
+  {
+    "id": 6,
+    "nombre": "Combo zapato + camisa",
+    "precio": 9000,
+    "tipo": "combo",
+    "imagen": "https://images.pexels.com/photos/298863/pexels-photo-298863.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+  },
+  {
+    "id": 7,
+    "nombre": "Conjunto para bebes completo",
+    "precio": 3000,
+    "tipo": "combo",
+    "imagen": "https://images.pexels.com/photos/3671111/pexels-photo-3671111.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+  },
+  {
+    "id": 8,
+    "nombre": "Conjunto Casual para niñas Completo",
+    "precio": 5000,
+    "tipo": "combo",
+    "imagen": "https://images.pexels.com/photos/5623054/pexels-photo-5623054.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+  }
+]
