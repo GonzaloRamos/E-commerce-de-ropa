@@ -32,33 +32,40 @@
     </nav>
 
 
-    <form>
+    <form class="was-validated">
 
         <div class="container mt-5">
             <div class="row">
-                <div class="col ml-3">
+                <div class="col-4 ml-3">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Nombre del producto" aria-label="Username"
-                            aria-describedby="basic-addon1" id="inputProducto">
+                        <input type="text" class="form-control is-valid" placeholder="Nombre del producto"
+                            aria-label="Username" aria-describedby="basic-addon1" id="inputProducto" required>
                     </div>
                 </div>
 
-                <div class="col">
+                <div class="col-4">
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon2">$</span>
 
-                        <input type="number" class="form-control" placeholder="Precio : $5040"
-                            aria-label="Recipient's username" aria-describedby="basic-addon2" id="inputPrecio">
+                        <input type="number" class="form-control is-valid" placeholder="Precio : $5040"
+                            aria-label="Recipient's username" aria-describedby="basic-addon2" id="inputPrecio" required>
                     </div>
                 </div>
-                <div class="col">
-                    <select class="form-select form-control mb-3" id="inputCategoria">
-                        <option selected>Categorias</option>
+                <div class="col-4">
+                    <select class="form-select form-control is-valid mb-3" id="inputCategoria" required
+                        aria-label="select example">
+                        <option value="">Categorias</option>
                         <option value="shirt">Remera</option>
                         <option value="socks">Medias</option>
                         <option value="hat">Sombreros</option>
                         <option value="clothes">Combos</option>
                     </select>
+                </div>
+                <div class="col-4">
+                    <div></div>
+                </div>
+                <div class="col-4"><button class="btn btn-primary mt-5" id="enviar" disabled>Confirmar</button>
+                    <button class="btn btn-secondary mt-5" id="eliminar">Eliminar Productos</button>
                 </div>
             </div>
         </div>
@@ -85,7 +92,6 @@
         </div>
 
     </form>
-    <button class="btn btn-success" id="hola">hola</button>
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <!-- jQuery -->

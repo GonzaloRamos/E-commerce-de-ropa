@@ -308,33 +308,30 @@ function busquedaImagen(numeroPagina) {
   if (DomCreadorChildrens > 0) {
     DOMCreador.empty();
   }
+
   $.get(
     `https:api.unsplash.com/search/photos?page=${numeroPagina}&query=${busqueda}&client_id=6jOe1shlCKU5MbgMiSbWZ73v365p9Lu0ZrFKKQOY17k`,
     function (respuesta, estado) {
       if (estado === "success") {
         let datosAPI = respuesta.results;
-        // console.log(datosAPI);
 
         datosAPI.forEach((element) => {
           let i = DOMCreador.children().length;
-
-          DOMCreador.append(
-            `
-            <div class="col mb-3 id="cardBusqueda">
-              <div class="card" style="width: 18rem;">
-                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault${i}" name="urlImagen" direccion="${element.urls.raw}" onclick="obtenerUrlImagen(this)" >
-                  <label class="form-check-label" for="flexRadioDefault${i}" >
-                    <img src="${element.urls.raw}" class="card-img-top img_search" alt="${element.alt_description}">
-                  </label>
-                <div class="card-body">
-                  <p class="card-text">Foto sacada por ${element.user.name} <br>Foto de libre uso.</p>
-                </div>
-              </div>
-            </div>`
-          );
+          $(`
+             <div class="col mb-3 asd" id="cardBusqueda" style="display:none;">
+               <div class="card" style="width: 18rem;">
+                   <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault${i}" name="urlImagen" direccion="${element.urls.raw}" onclick="obtenerUrlImagen(this)" >
+                   <label class="form-check-label" for="flexRadioDefault${i}" >
+                     <img src="${element.urls.raw}" class="card-img-top img_search" alt="${element.alt_description}">
+                   </label>
+                 <div class="card-body">
+                   <p class="card-text">Foto sacada por ${element.user.name} <br>Foto de libre uso.</p>
+                 </div>
+               </div>
+             </div>`)
+            .appendTo(DOMCreador)
+            .fadeIn(1500);
         });
-        //Evento para que se inicialize despues del append, sino no lo reconoce. Obtiene la url segun donde se haga click
-        // $("input:radio").click({ param1: this }, obtenerUrlImagen);
       }
     }
   );
@@ -378,7 +375,6 @@ function agregarProductoUsuario(listaUrls) {
       break;
 
     default:
-      alert("Hubo un error al carga su producto. Por favor intentelo de nuevo");
       break;
   }
 
@@ -392,7 +388,6 @@ function agregarProductoUsuario(listaUrls) {
       "productosUsuario",
       JSON.stringify(arrayProductosUsuario)
     );
-
     window.location.href = "./index.html";
   }
 }
@@ -404,6 +399,15 @@ sumaTotal();
 contadorCarro();
 renderCarrito();
 habilitar();
+
+setInterval(() => {
+  let nombre = $("#inputProducto").val().length;
+  let precio = $("#inputPrecio").val().length;
+  let categoria = DOMInputCategoria.val();
+  if (nombre > 0 && precio > 0 && categoria) {
+    $("#enviar").prop("disabled", false);
+  }
+}, 1000);
 
 //Eventos
 DOMBotonVaciar.on("click", vaciarCarrito);
@@ -428,8 +432,16 @@ $(".breadcrumb-item").on("click", function (evento) {
   busquedaImagen(numeroPagina);
 });
 
-$("#hola").click(function () {
-  console.log(agregarProductoUsuario(arrayUrls));
+//Evento que agrega el producto al index
+
+$("#enviar").click(function () {
+  agregarProductoUsuario(arrayUrls);
+});
+
+$("#eliminar").click(() => {
+  localStorage.clear("productosUsuario");
+  alert("Productos eliminados con exito");
+  window.location.reload();
 });
 
 //Animaciones
@@ -439,3 +451,5 @@ $("header").fadeIn(800, function () {
     $("#subTituloPag").fadeIn("slow");
   });
 });
+
+$(".asd").fadeIn(800);
