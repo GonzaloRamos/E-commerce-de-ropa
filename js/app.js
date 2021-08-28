@@ -451,5 +451,3 @@ $("header").fadeIn(800, function () {
     $("#subTituloPag").fadeIn("slow");
   });
 });
-
-$(".asd").fadeIn(800);
