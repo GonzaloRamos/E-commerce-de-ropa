@@ -1,16 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Tienda de ropa de primera calidad" />
+    <meta name="author" content="Gonzalo Ramos" />
+    <title>Tienda de ropa</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/mi_estilo.css">
 </head>
+
 <body>
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container px-4 px-lg-5">
+            <a class="navbar-brand" href="#!">Tienda de ropa</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="subir_producto.html">Subir un producto</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">Productos</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#!" filtro="todosLosProductos">Todos los productos</a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider" />
+                            </li>
+                            <li><a class="dropdown-item" href="#!" filtro="remera">Remeras</a></li>
+                            <li><a class="dropdown-item" href="#!" filtro="combo">Combos</a></li>
+                            <li><a class="dropdown-item" href="#!" filtro="medias">Medias</a></li>
+                            <li><a class="dropdown-item" href="#!" filtro="sombrero">Sombreros</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <!-- Button trigger modal -->
+
+                <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                    id="botonCarrito">
+                    <i class="bi-cart-fill me-1"></i>
+                    Carrito
+                    <span class="badge bg-dark text-white ms-1 rounded-pill" id="contador">0</span>
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Carrito de compras</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-7">
+                                            <ul class="list-group list-group-flush" id="carrito"></ul>
+
+                                        </div>
+                                        <div class="col-5">
+
+                                            <select class="form-select" id="cuotas" disabled>
+                                                <option value="1">1 Cuota</option>
+                                                <option value="3">3 Cuotas</option>
+                                                <option value="6">6 Cuotas</option>
+                                                <option value="9">9 Cuotas</option>
+                                                <option value="12">12 Cuotas</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-start align-items-end" id="subTotal">
+                                        <p class="text-center total">Total: &dollar;<span id="total"></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" id="botonVaciar" disabled>Vaciar
+                                    Carrito</button>
+                                <button type="button" class="btn btn-primary" id="comprar" disabled>Comprar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- <form class="d-flex">
+
+                </form> -->
+            </div>
+        </div>
+    </nav>
+    <!-- Header-->
+    <header class="py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder" id="tituloPag">Tienda de Ropa</h1>
+                <p class="lead fw-normal text-white-70 mb-0" id="subTituloPag">Todo para expresarte a traves de la
+                    vestimenta</p>
+            </div>
+        </div>
+    </header>
+    <!-- Section-->
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 mt-5">
+            <!--a partir de este div se crea con JS-->
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center" id="cardRows">
+
+
+            </div>
+        </div>
+    </section>
 
 
 
-    <script src="./app.js"></script>
-    
+    <!-- Footer-->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; Gonzalo Ramos</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!-- mi JS-->
+    <script src="js/app.js"></script>
 </body>
+
 </html>

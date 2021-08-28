@@ -1,0 +1,50 @@
+/* * {
+  border: solid 1px red;
+
+} */
+
+header {
+  display: none;
+  background-image: url(../assets/imagenes/img_header.jpg);
+  min-height: 400px;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+header > div > div > h1,
+header > div > div > p {
+  display: none;
+  text-shadow: 1px 1px 2px black;
+}
+
+.modal-body {
+  padding-bottom: 0px;
+}
+
+.total {
+  padding: 40px 0px 0px 16px;
+}
+
+.img {
+  height: 33vh;
+  transition: transform 0.2s, border-radius 0.2s;
+}
+
+.img_search {
+  transition: transform 0.2s, border-radius 0.2s;
+}
+
+.img:hover,
+.img_search:hover {
+  transform: scale(1.05);
+  border-radius: 20px;
+}
+
+input[type="radio"] {
+  position: absolute;
+  background-color: rgba(rgba(255, 0, 0, 0));
+  margin: 10px 10px;
+  z-index: 999;
+}
